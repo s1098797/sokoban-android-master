@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/C:/Users/s1098797/StudioProjects/sokoban-android-master/app/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="app_name">Sokoban</string>
+    <string name="continue_game">Continue</string>
+    <string name="high_scores">High Scores</string>
+    <string name="level_select">Level Select</string>
+    <string name="new_game">New Game</string>
+    <string name="retry_level">Retry Level</string>
+    <string name="skip_level">Skip Level</string>
+    <string name="win_level">Win!</string>
+</resources>

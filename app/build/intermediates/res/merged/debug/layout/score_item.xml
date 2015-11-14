@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:stretchColumns="1"
+    >
+  <TableRow>
+    <TextView
+      android:id="@+id/score_levelset" 
+      android:padding="5dip" />
+    <TextView
+      android:id="@+id/score_level" 
+      android:padding="5dip" />
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="fill_parent"
+      android:padding="5dip">
+      <TextView android:id="@+id/high_score_moves"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent" />
+      <TextView android:text=" moves"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent" />
+    </LinearLayout>
+  </TableRow>
+</TableLayout>
+<!-- From: file:/C:/Users/s1098797/StudioProjects/sokoban-android-master/app/src/main/res/layout/score_item.xml -->
