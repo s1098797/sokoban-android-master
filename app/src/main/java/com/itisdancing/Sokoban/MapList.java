@@ -1,5 +1,7 @@
 package com.itisdancing.Sokoban;
 
+/* ---- this class generates the map from the raw data file "sokoban"  ---- */
+
 import java.io.*;
 import java.util.*;
 import android.util.Log;

@@ -1,5 +1,8 @@
 package com.itisdancing.Sokoban;
 
+/* ---- this class consists of the arena: generate map, mostly controls the data changed from the SokobanView class, performs validation  ---- */
+/* ---- there are problems that showing the arena in the app , I don't know whether this java or SokobanView.java contain wrong codes ---- */
+
 import android.graphics.Rect;
 import android.util.Log;
 

@@ -1,5 +1,9 @@
 package com.itisdancing.Sokoban;
 
+/* ----  this java produces the view: draw maps, set codes for user to control(play) and make reactions,   ---- */
+/* ---- there are problems that showing the arena in the app , I don't know whether this java or SokobanArena.java contain wrong codes ---- */
+/* ----  the app cannot perform level select, I don't know whether the codes in loadGame() are the main problem  ---- */
+
 import android.view.View;
 import android.view.KeyEvent;
 import android.view.MotionEvent;

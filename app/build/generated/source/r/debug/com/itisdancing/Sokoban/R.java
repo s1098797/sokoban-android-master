@@ -18,7 +18,7 @@ public final class R {
         public static final int wall=0x7f020004;
     }
     public static final class id {
-        public static final int about_us_button=0x7f070007;
+        public static final int about_button=0x7f070007;
         public static final int game_frame=0x7f070001;
         public static final int game_status_bar=0x7f070000;
         public static final int high_score_moves=0x7f07000a;
@@ -46,7 +46,7 @@ public final class R {
         public static final int sokoban=0x7f040000;
     }
     public static final class string {
-        public static final int about_us=0x7f050000;
+        public static final int about=0x7f050000;
         public static final int app_name=0x7f050001;
         public static final int continue_game=0x7f050002;
         public static final int high_scores=0x7f050003;

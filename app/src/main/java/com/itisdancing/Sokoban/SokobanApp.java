@@ -1,5 +1,7 @@
 package com.itisdancing.Sokoban;
 
+    /* ---- this class is the homepage, nothing special, but I added two buttons "Settings" and "About"  for my own test and later---- */
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;

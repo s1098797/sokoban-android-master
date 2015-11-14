@@ -1,5 +1,7 @@
 package com.itisdancing.Sokoban;
 
+/* ---- this class is the game page, generates SokobanView and menu---- */
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.content.Intent;

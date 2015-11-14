@@ -1,5 +1,7 @@
 package com.itisdancing.Sokoban;
 
+/* ----   this java  is the high score page, probably retrieve data from PersistentStore.java  ---- */
+
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.content.Intent;
