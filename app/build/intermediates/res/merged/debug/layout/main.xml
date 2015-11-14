@@ -36,6 +36,18 @@
       android:layout_height="wrap_content" 
       android:text="@string/high_scores"
       />
+  <Button
+      android:id="@+id/settings_button"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/settings"
+      />
+  <Button
+      android:id="@+id/about_us_button"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/about_us"
+      />
 
 </LinearLayout>
-<!-- From: file:/C:/Users/s1098797/StudioProjects/sokoban-android-master/app/src/main/res/layout/main.xml -->
+<!-- From: file:/C:/Users/David/AndroidStudioProjects/sokoban-android-master(git)/app/src/main/res/layout/main.xml -->

@@ -43,7 +43,7 @@ public class SokobanApp extends Activity implements OnClickListener
         case R.id.home_high_score_button:
           startActivity(scores);
         case R.id.settings_button:
-          startActivity(scores);
+          //write PreferenceActivity codes
         case R.id.about_us_button:
             new AlertDialog.Builder(this).setTitle(R.string.about_us).setMessage("Member:xxx").setNeutralButton("OK", null).show();
       }
