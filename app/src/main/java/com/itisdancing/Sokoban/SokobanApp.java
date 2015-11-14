@@ -21,7 +21,7 @@ public class SokobanApp extends Activity implements OnClickListener
         findViewById(R.id.home_level_select_button).setOnClickListener(this);
         findViewById(R.id.home_high_score_button).setOnClickListener(this);
         findViewById(R.id.settings_button).setOnClickListener(this);
-        findViewById(R.id.about_us_button).setOnClickListener(this);
+        findViewById(R.id.about_button).setOnClickListener(this);
     }
 
     public void onClick(View v) {

@@ -43,10 +43,10 @@
       android:text="@string/settings"
       />
   <Button
-      android:id="@+id/about_us_button"
+      android:id="@+id/about_button"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
-      android:text="@string/about_us"
+      android:text="@string/about"
       />
 
 </LinearLayout>
