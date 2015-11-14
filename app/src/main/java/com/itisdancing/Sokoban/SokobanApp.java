@@ -1,6 +1,7 @@
 package com.itisdancing.Sokoban;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
@@ -19,6 +20,8 @@ public class SokobanApp extends Activity implements OnClickListener
         findViewById(R.id.home_continue_button).setOnClickListener(this);
         findViewById(R.id.home_level_select_button).setOnClickListener(this);
         findViewById(R.id.home_high_score_button).setOnClickListener(this);
+        findViewById(R.id.settings_button).setOnClickListener(this);
+        findViewById(R.id.about_us_button).setOnClickListener(this);
     }
 
     public void onClick(View v) {
@@ -39,6 +42,10 @@ public class SokobanApp extends Activity implements OnClickListener
           break;
         case R.id.home_high_score_button:
           startActivity(scores);
+        case R.id.settings_button:
+          startActivity(scores);
+        case R.id.about_us_button:
+            new AlertDialog.Builder(this).setTitle(R.string.about_us).setMessage("Member:xxx").setNeutralButton("OK", null).show();
       }
     }
 }
