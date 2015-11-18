@@ -4,6 +4,8 @@ package com.itisdancing.Sokoban;
 /* ---- there are problems that showing the arena in the app , I don't know whether this java or SokobanArena.java contain wrong codes ---- */
 /* ----  the app cannot perform level select, I don't know whether the codes in loadGame() are the main problem  ---- */
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.view.View;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -199,7 +201,23 @@ public class SokobanView extends View {
 
     if(arena.gameWon()) {
       levelWon();
-      nextLevel();
+      //nextLevel();
+      /* --  create an dialog after passing each level, but it affect the function of "continue" --*/
+      AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+      alert.setCancelable(false);
+      alert.setMessage("OK: Go to next level; Back: back to homepage");
+      alert.setTitle("Congratulations");
+      alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int which) {
+          nextLevel();
+        }
+      });
+      alert.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int which) {
+          ((SokobanGame) getContext()).finish();
+        }
+      });
+      alert.show();
     }
   }
 
