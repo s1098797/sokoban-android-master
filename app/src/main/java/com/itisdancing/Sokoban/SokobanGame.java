@@ -40,14 +40,14 @@ public class SokobanGame extends Activity
     @Override
     protected void onPause() {
       super.onPause();
-      saveGame();
+      //saveGame();
     }
 
-/*    @Override
+   @Override
     protected void onResume() {
       super.onResume();
       sokoban_view.loadGame(-1);
-    } */
+    }
 
     @Override
     protected void onDestroy() {

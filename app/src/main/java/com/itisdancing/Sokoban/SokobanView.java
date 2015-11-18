@@ -214,6 +214,7 @@ public class SokobanView extends View {
       });
       alert.setNegativeButton("Back", new DialogInterface.OnClickListener() {
         public void onClick(DialogInterface dialog, int which) {
+          selectMapLoad(((SokobanGame) getContext()).getSavedLevel()+1); /* -- codes for loading next level for continue 18-nov -- */
           ((SokobanGame) getContext()).finish();
         }
       });
@@ -261,6 +262,12 @@ public class SokobanView extends View {
     current_level = level;
     updateStatusBar();
     invalidate();
+  }
+
+  /* -- selectMapLoad() is new created for loading next level info. for user to continue 18-nov-- */
+  protected void selectMapLoad(int level) {
+    arena = map_list.selectMap(level);
+    current_level = level;
   }
 
   protected void levelWon() {
