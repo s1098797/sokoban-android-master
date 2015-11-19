@@ -201,24 +201,24 @@ public class SokobanView extends View {
 
     if(arena.gameWon()) {
       levelWon();
-      //nextLevel();
-      /* --  create an dialog after passing each level, but it affect the function of "continue" --*/
       AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
       alert.setCancelable(false);
-      alert.setMessage("OK: Go to next level; Back: back to homepage");
-      alert.setTitle("Congratulations");
-      alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+      alert.setMessage("Next: go to next level; Back: back to homepage");
+      alert.setTitle("Congraduation!");
+      alert.setPositiveButton("Next", new DialogInterface.OnClickListener() {
         public void onClick(DialogInterface dialog, int which) {
           nextLevel();
         }
       });
       alert.setNegativeButton("Back", new DialogInterface.OnClickListener() {
         public void onClick(DialogInterface dialog, int which) {
-          selectMapLoad(((SokobanGame) getContext()).getSavedLevel()+1); /* -- codes for loading next level for continue 18-nov -- */
+          d("" + ((SokobanGame) getContext()).getSavedLevel() + 1);
+          selectMapLoad(current_level + 1); /* -- codes for loading next level for continue 19-nov -- */
           ((SokobanGame) getContext()).finish();
         }
       });
       alert.show();
+      //nextLevel();
     }
   }
 
@@ -264,10 +264,15 @@ public class SokobanView extends View {
     invalidate();
   }
 
-  /* -- selectMapLoad() is new created for loading next level info. for user to continue 18-nov-- */
+  /* -- selectMapLoad() is new created for loading next level info. for user to continue 19-nov -- */
   protected void selectMapLoad(int level) {
+    d(""+level);
     arena = map_list.selectMap(level);
     current_level = level;
+    d(""+current_level);
+    updateStatusBar();
+    invalidate();
+    ((SokobanGame) getContext()).saveGame();
   }
 
   protected void levelWon() {
