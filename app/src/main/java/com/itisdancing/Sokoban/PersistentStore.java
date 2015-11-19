@@ -1,6 +1,6 @@
 package com.itisdancing.Sokoban;
 
-/* -----  this java is for saving the data of each level, lecture 10 notes   ---- */   
+/* -----  this java is for saving the data of each level, lecture 10 notes   ---- */
 
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
