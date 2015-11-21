@@ -156,6 +156,7 @@ public class SokobanView extends View {
   }
 
   protected void sokobanAnimation(String movingDirection) {
+    //change leg
     monitorAnimation++;
     switch(movingDirection){
       case "SOUTH":sokoban =(monitorAnimation%2==0?getResources().getDrawable(R.drawable.down2):getResources().getDrawable(R.drawable.down4));break;
@@ -163,7 +164,8 @@ public class SokobanView extends View {
       case "EAST": sokoban =(monitorAnimation%2==0?getResources().getDrawable(R.drawable.right2):getResources().getDrawable(R.drawable.right4));break;
       case "WEST": sokoban =(monitorAnimation%2==0?getResources().getDrawable(R.drawable.left2):getResources().getDrawable(R.drawable.left4));break;
     }
-    if(monitorAnimation==5) monitorAnimation=1;
+    //reset counter
+    if(monitorAnimation == 5) monitorAnimation = 1;
   }
 
   protected void doMove(int direction) {
