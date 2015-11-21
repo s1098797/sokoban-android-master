@@ -37,11 +37,13 @@ public class SokobanView extends View {
   private SokobanArena arena;
   private PersistentStore store;
 
+  //private String directionSokoban = SokobanArena.getMovDirection();
+
   public SokobanView(SokobanGame context) {
     super(context);
     store = new PersistentStore(context);
     floor = getResources().getDrawable(R.drawable.floor);
-    sokoban = getResources().getDrawable(R.drawable.sokoban);
+    sokoban = getResources().getDrawable(R.drawable.down1);
     wall = getResources().getDrawable(R.drawable.wall);
     crate = getResources().getDrawable(R.drawable.crate);
     goal = getResources().getDrawable(R.drawable.goal);
@@ -60,7 +62,7 @@ public class SokobanView extends View {
     this((SokobanGame) context);
   }
 
-  public SokobanArena getArena() { return arena; } 
+  public SokobanArena getArena() { return arena; }
   public int getCurrentLevel() { return current_level; }
 
   public void retryLevel() {
@@ -130,28 +132,8 @@ public class SokobanView extends View {
     return true;
   }
 
-  @Override
-  public boolean onKeyDown(int keyCode, KeyEvent event) {
-    Rect invalid;
-    switch (keyCode) {
-    case KeyEvent.KEYCODE_DPAD_UP:
-      doMove(SokobanArena.NORTH);
-      break;
-    case KeyEvent.KEYCODE_DPAD_DOWN:
-      doMove(SokobanArena.SOUTH);
-      break;
-    case KeyEvent.KEYCODE_DPAD_RIGHT:
-      doMove(SokobanArena.EAST);
-      break;
-    case KeyEvent.KEYCODE_DPAD_LEFT:
-      doMove(SokobanArena.WEST);
-      break;
-    default:
-      return super.onKeyDown(keyCode, event);
-    }
-    return true;
-  }
-
+  /*@Override
+  remove public boolean onKeyDown(int keyCode, KeyEvent event) */
   protected void touchMove() {
     int delta_x = drag_stop.x - drag_start.x;
     int delta_y = drag_stop.y - drag_start.y;
@@ -178,10 +160,10 @@ public class SokobanView extends View {
 
     if (tall) {
       switch(direction) {
-        case SokobanArena.SOUTH: direction = SokobanArena.EAST; break;
-        case SokobanArena.NORTH: direction = SokobanArena.WEST; break;
-        case SokobanArena.EAST: direction = SokobanArena.NORTH; break;
-        case SokobanArena.WEST: direction = SokobanArena.SOUTH; break;
+        case SokobanArena.SOUTH: sokoban = getResources().getDrawable(R.drawable.down1); direction = SokobanArena.EAST; break;
+        case SokobanArena.NORTH: sokoban = getResources().getDrawable(R.drawable.up4); direction = SokobanArena.WEST; break;
+        case SokobanArena.EAST:  sokoban = getResources().getDrawable(R.drawable.right1); direction = SokobanArena.NORTH; break;
+        case SokobanArena.WEST: sokoban = getResources().getDrawable(R.drawable.left1); direction = SokobanArena.SOUTH; break;
       }
     }
 
@@ -259,9 +241,8 @@ public class SokobanView extends View {
 
   protected void updateStatusBar() {
     ((SokobanGame) getContext()).setStatusBar(
-      "Level: " + (current_level + 1) +
-      " | Moves: " + arena.getMoves()
+            "Level: " + (current_level + 1) +
+                    " | Moves: " + arena.getMoves()
     );
   }
 }
-
