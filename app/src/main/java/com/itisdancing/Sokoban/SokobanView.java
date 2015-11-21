@@ -155,27 +155,27 @@ public class SokobanView extends View {
     }
   }
 
-  protected void sokobanAnimation(int monitorAnimationCounter, String movingDirection) {
+  protected void sokobanAnimation(String movingDirection) {
+    monitorAnimation++;
     switch(movingDirection){
-      case "SOUTH":sokoban =(monitorAnimationCounter%2==0?getResources().getDrawable(R.drawable.down1):getResources().getDrawable(R.drawable.down4));break;
-      case "NORTH": sokoban =(monitorAnimationCounter%2==0?getResources().getDrawable(R.drawable.up1):getResources().getDrawable(R.drawable.up4));break;
-      case "EAST": sokoban =(monitorAnimationCounter%2==0?getResources().getDrawable(R.drawable.right1):getResources().getDrawable(R.drawable.right4));break;
-      case "WEST": sokoban =(monitorAnimationCounter%2==0?getResources().getDrawable(R.drawable.left1):getResources().getDrawable(R.drawable.left4));break;
+      case "SOUTH":sokoban =(monitorAnimation%2==0?getResources().getDrawable(R.drawable.down2):getResources().getDrawable(R.drawable.down4));break;
+      case "NORTH": sokoban =(monitorAnimation%2==0?getResources().getDrawable(R.drawable.up2):getResources().getDrawable(R.drawable.up4));break;
+      case "EAST": sokoban =(monitorAnimation%2==0?getResources().getDrawable(R.drawable.right2):getResources().getDrawable(R.drawable.right4));break;
+      case "WEST": sokoban =(monitorAnimation%2==0?getResources().getDrawable(R.drawable.left2):getResources().getDrawable(R.drawable.left4));break;
     }
+    if(monitorAnimation==5) monitorAnimation=1;
   }
 
   protected void doMove(int direction) {
     Rect invalid;
 
     if (tall) {
-      monitorAnimation++;
       switch(direction) {
-        case SokobanArena.SOUTH: sokobanAnimation(monitorAnimation,"SOUTH"); direction = SokobanArena.EAST; break;
-        case SokobanArena.NORTH: sokobanAnimation(monitorAnimation,"NORTH"); direction = SokobanArena.WEST; break;
-        case SokobanArena.EAST: sokobanAnimation(monitorAnimation,"EAST"); direction = SokobanArena.NORTH; break;
-        case SokobanArena.WEST: sokobanAnimation(monitorAnimation,"WEST"); direction = SokobanArena.SOUTH; break;
+        case SokobanArena.SOUTH: sokobanAnimation("SOUTH"); direction = SokobanArena.EAST; break;
+        case SokobanArena.NORTH: sokobanAnimation("NORTH"); direction = SokobanArena.WEST; break;
+        case SokobanArena.EAST: sokobanAnimation("EAST"); direction = SokobanArena.NORTH; break;
+        case SokobanArena.WEST: sokobanAnimation("WEST"); direction = SokobanArena.SOUTH; break;
       }
-      monitorAnimation--;
     }
 
     arena.moveMan(direction);
