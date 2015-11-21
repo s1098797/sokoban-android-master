@@ -12,10 +12,18 @@ public final class R {
     }
     public static final class drawable {
         public static final int crate=0x7f020000;
-        public static final int floor=0x7f020001;
-        public static final int goal=0x7f020002;
-        public static final int sokoban=0x7f020003;
-        public static final int wall=0x7f020004;
+        public static final int down1=0x7f020001;
+        public static final int down4=0x7f020002;
+        public static final int floor=0x7f020003;
+        public static final int goal=0x7f020004;
+        public static final int left1=0x7f020005;
+        public static final int left4=0x7f020006;
+        public static final int right1=0x7f020007;
+        public static final int right4=0x7f020008;
+        public static final int sokoban=0x7f020009;
+        public static final int up1=0x7f02000a;
+        public static final int up4=0x7f02000b;
+        public static final int wall=0x7f02000c;
     }
     public static final class id {
         public static final int about_button=0x7f070007;

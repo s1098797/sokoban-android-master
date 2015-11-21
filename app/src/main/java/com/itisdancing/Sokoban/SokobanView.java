@@ -36,7 +36,7 @@ public class SokobanView extends View {
   private MapList map_list;
   private SokobanArena arena;
   private PersistentStore store;
-
+  private int monitorAnimation=1;
   //private String directionSokoban = SokobanArena.getMovDirection();
 
   public SokobanView(SokobanGame context) {
@@ -155,15 +155,25 @@ public class SokobanView extends View {
     }
   }
 
+  protected void sokobanAnimation(String movingDirection) {
+    monitorAnimation+=1;
+    switch(movingDirection){
+      case "SOUTH":sokoban =(monitorAnimation%2==0?getResources().getDrawable(R.drawable.down1):getResources().getDrawable(R.drawable.down4));monitorAnimation-=1;break;
+      case "NORTH": sokoban =(monitorAnimation%2==0?getResources().getDrawable(R.drawable.up1):getResources().getDrawable(R.drawable.up4));monitorAnimation-=1;break;
+      case "EAST": sokoban =(monitorAnimation%2==0?getResources().getDrawable(R.drawable.right1):getResources().getDrawable(R.drawable.right4));monitorAnimation-=1;break;
+      case "WEST": sokoban =(monitorAnimation%2==0?getResources().getDrawable(R.drawable.left1):getResources().getDrawable(R.drawable.left4));monitorAnimation-=1;break;
+    }
+  }
+
   protected void doMove(int direction) {
     Rect invalid;
 
     if (tall) {
       switch(direction) {
-        case SokobanArena.SOUTH: sokoban = getResources().getDrawable(R.drawable.down1); direction = SokobanArena.EAST; break;
-        case SokobanArena.NORTH: sokoban = getResources().getDrawable(R.drawable.up4); direction = SokobanArena.WEST; break;
-        case SokobanArena.EAST:  sokoban = getResources().getDrawable(R.drawable.right1); direction = SokobanArena.NORTH; break;
-        case SokobanArena.WEST: sokoban = getResources().getDrawable(R.drawable.left1); direction = SokobanArena.SOUTH; break;
+        case SokobanArena.SOUTH: sokobanAnimation("SOUTH"); direction = SokobanArena.EAST; break;
+        case SokobanArena.NORTH: sokobanAnimation("NORTH"); direction = SokobanArena.WEST; break;
+        case SokobanArena.EAST: sokobanAnimation("EAST"); direction = SokobanArena.NORTH; break;
+        case SokobanArena.WEST: sokobanAnimation("WEST"); direction = SokobanArena.SOUTH; break;
       }
     }
 
