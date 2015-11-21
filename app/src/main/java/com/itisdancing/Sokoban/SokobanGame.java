@@ -3,6 +3,8 @@ package com.itisdancing.Sokoban;
 /* ---- this class is the game page, generates SokobanView and menu---- */
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.ViewGroup;
@@ -21,6 +23,8 @@ public class SokobanGame extends Activity
     private static final String PREF_CURRENT_LEVEL = "current_level";
     protected static final String KEY_LEVEL = "level";
     protected static final int LEVEL_CONTINUE = -1;
+    public static final String SHARE_PREF_NAME = "pref";  /* -- 21 nov -- */
+    public static final String PASSED_LEVEL = "passed_level";  /* -- 21 nov -- */
     
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -97,6 +101,18 @@ public class SokobanGame extends Activity
         putString(PREF_SAVED_GAME, sokoban_view.getArena().serialize()).
         putInt(PREF_CURRENT_LEVEL, sokoban_view.getCurrentLevel()).
         commit();
+    }
+
+    public void putSaveLevel() {     /* 21-nov */
+        SharedPreferences pref = getSharedPreferences(SHARE_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putInt(PASSED_LEVEL, sokoban_view.getCurrentLevel());
+        editor.commit();
+    }
+
+    public int getSaveLevel() {     /* 21-nov */
+        SharedPreferences pref = getSharedPreferences(SHARE_PREF_NAME, Context.MODE_PRIVATE);
+        return pref.getInt(PASSED_LEVEL, 0);
     }
 
     protected void d(String message) {

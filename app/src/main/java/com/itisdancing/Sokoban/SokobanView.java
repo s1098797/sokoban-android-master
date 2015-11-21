@@ -201,6 +201,8 @@ public class SokobanView extends View {
 
     if(arena.gameWon()) {
       levelWon();
+      if (current_level > ((SokobanGame) getContext()).getSaveLevel())  /* 21-nov */
+          ((SokobanGame) getContext()).putSaveLevel();   /* 21-nov */
       AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
       alert.setCancelable(false);
       alert.setMessage("Next: go to next level; Back: back to homepage");
