@@ -30,12 +30,16 @@ public class SokobanGame extends Activity
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game);
-        frame = (ViewGroup) findViewById(R.id.game_frame);
-        status_bar = (TextView) findViewById(R.id.game_status_bar);
-        sokoban_view = new SokobanView(this, getIntent().getIntExtra(KEY_LEVEL, 0));
-        sokoban_view.setFocusable(true);
-        sokoban_view.setFocusableInTouchMode(true);
-        frame.addView(sokoban_view);
+
+        if (savedInstanceState == null) {
+            frame = (ViewGroup) findViewById(R.id.game_frame);
+            status_bar = (TextView) findViewById(R.id.game_status_bar);
+            sokoban_view = new SokobanView(this, getIntent().getIntExtra(KEY_LEVEL, 0));
+            sokoban_view.setFocusable(true);
+            sokoban_view.setFocusableInTouchMode(true);
+            frame.addView(sokoban_view);
+        }
+
     }
     
     @Override
@@ -44,11 +48,11 @@ public class SokobanGame extends Activity
       saveGame();
     }
 
-/*    @Override
+    @Override
     protected void onResume() {
       super.onResume();
       sokoban_view.loadGame(-1);
-    } */
+    }
 
     @Override
     protected void onDestroy() {

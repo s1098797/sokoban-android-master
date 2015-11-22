@@ -35,8 +35,12 @@ ADDED from D:\gitHub\sokoban-android-master(from dvd)\app\src\main\AndroidManife
 		ADDED from D:\gitHub\sokoban-android-master(from dvd)\app\src\main\AndroidManifest.xml:11:27-74
 activity#com.itisdancing.Sokoban.SokobanGame
 ADDED from D:\gitHub\sokoban-android-master(from dvd)\app\src\main\AndroidManifest.xml:14:9-15:20
+	android:screenOrientation
+		ADDED from D:\gitHub\sokoban-android-master(from dvd)\app\src\main\AndroidManifest.xml:14:141-177
 	android:label
 		ADDED from D:\gitHub\sokoban-android-master(from dvd)\app\src\main\AndroidManifest.xml:14:46-78
+	android:configChanges
+		ADDED from D:\gitHub\sokoban-android-master(from dvd)\app\src\main\AndroidManifest.xml:14:79-140
 	android:name
 		ADDED from D:\gitHub\sokoban-android-master(from dvd)\app\src\main\AndroidManifest.xml:14:19-45
 activity#com.itisdancing.Sokoban.SokobanScores
