@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/C:/Users/David/AndroidStudioProjects/sokoban-android-master(git)/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/gitHub/sokoban-android-master/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="about">About</string>
     <string name="app_name">Sokoban</string>
