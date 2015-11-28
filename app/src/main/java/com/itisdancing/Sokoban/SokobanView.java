@@ -64,6 +64,11 @@ public class SokobanView extends View {
 
   public SokobanArena getArena() { return arena; } 
   public int getCurrentLevel() { return current_level; }
+  public int getCurrentMoves() { return arena.getMoves();}
+ /* public void setCurrentMoves() {
+    int move = (SokobanGame) getContext()).getSavedCurrentMoves();
+    arena.setMoves(move);
+  }*/
 
   public void retryLevel() {
     selectMap(current_level);
@@ -201,8 +206,8 @@ public class SokobanView extends View {
 
     if(arena.gameWon()) {
       levelWon();
-      if (current_level > ((SokobanGame) getContext()).getSaveLevel())  /* 21-nov */
-          ((SokobanGame) getContext()).putSaveLevel();   /* 21-nov */
+      if (current_level > ((SokobanGame) getContext()).getPassedLevel())  /* 21-nov */
+          ((SokobanGame) getContext()).putPassedLevel();   /* 21-nov */
       AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
       alert.setCancelable(false);
       alert.setMessage("Next: go to next level; Back: back to homepage");
@@ -251,7 +256,9 @@ public class SokobanView extends View {
       } else {
         current_level = ((SokobanGame) getContext()).getSavedLevel();
         d("Saved game found for level #" + current_level);
+        d(""+ saved_game);
         arena = new MapList(new StringReader(saved_game)).selectMap(0);
+        arena.setMoves(((SokobanGame) getContext()).getSavedMoves());  /* saving the moves 28-nov*/
       }
     } else {
       d("Loading level #" + current_level);
@@ -290,10 +297,14 @@ public class SokobanView extends View {
   }
 
   protected void updateStatusBar() {
+    if (((SokobanGame) getContext()).getSavedMoves()>0) {((SokobanGame) getContext()).setStatusBar(
+            "Level: " + (current_level + 1) +
+                    " | Moves: " + ((SokobanGame) getContext()).getSavedMoves());}
     ((SokobanGame) getContext()).setStatusBar(
-      "Level: " + (current_level + 1) +
-      " | Moves: " + arena.getMoves()
+            "Level: " + (current_level + 1) +
+                    " | Moves: " + arena.getMoves()
     );
   }
+
 }
 

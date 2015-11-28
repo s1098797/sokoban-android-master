@@ -25,6 +25,7 @@ public class SokobanGame extends Activity
     protected static final int LEVEL_CONTINUE = -1;
     public static final String SHARE_PREF_NAME = "pref";  /* -- 21 nov -- */
     public static final String PASSED_LEVEL = "passed_level";  /* -- 21 nov -- */
+    public static final String PERF_CURRENT_MOVE = "current_move";  /* -- 28 nov -- */
     
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -91,6 +92,10 @@ public class SokobanGame extends Activity
       return getPreferences(MODE_PRIVATE).getInt(PREF_CURRENT_LEVEL, 0);
     }
 
+    public int getSavedMoves() { /* 28-nov */
+        return getPreferences(MODE_PRIVATE).getInt(PERF_CURRENT_MOVE, 0);
+    }
+
     public void setStatusBar(String message) {
       status_bar.setText(message);
     }
@@ -100,17 +105,24 @@ public class SokobanGame extends Activity
       getPreferences(MODE_PRIVATE).edit().
         putString(PREF_SAVED_GAME, sokoban_view.getArena().serialize()).
         putInt(PREF_CURRENT_LEVEL, sokoban_view.getCurrentLevel()).
+        putInt(PERF_CURRENT_MOVE, sokoban_view.getCurrentMoves()).
         commit();
+        /*SharedPreferences pref = getSharedPreferences(SHARE_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(PREF_SAVED_GAME, sokoban_view.getArena().serialize());
+        editor.putInt(PREF_CURRENT_LEVEL, sokoban_view.getCurrentLevel());
+        editor.putInt(PERF_CURRENT_MOVE, sokoban_view.getCurrentMoves());
+        editor.commit();*/
     }
 
-    public void putSaveLevel() {     /* 21-nov */
+    public void putPassedLevel() {     /* 21-nov */
         SharedPreferences pref = getSharedPreferences(SHARE_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt(PASSED_LEVEL, sokoban_view.getCurrentLevel());
         editor.commit();
     }
 
-    public int getSaveLevel() {     /* 21-nov */
+    public int getPassedLevel() {     /* 21-nov */
         SharedPreferences pref = getSharedPreferences(SHARE_PREF_NAME, Context.MODE_PRIVATE);
         return pref.getInt(PASSED_LEVEL, 0);
     }

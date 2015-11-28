@@ -30,6 +30,7 @@ public class SokobanArena
   private int moves;
   private int[] map;
   private Rect affected_area;
+  private SokobanView view;
 
   public SokobanArena() {
     map_width = 15;
@@ -54,6 +55,7 @@ public class SokobanArena
   public int getMapWidth() { return map_width; }
   public int getMapHeight() { return map_height; }
   public int getMoves() { return moves; }
+  public void setMoves(int move) { moves = move; }  /* -- 28-nov */
 
   public String serialize() {
     // This is horribly inefficient. Invoke Knuth and pass through.
