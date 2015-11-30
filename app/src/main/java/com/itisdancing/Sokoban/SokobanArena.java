@@ -30,7 +30,6 @@ public class SokobanArena
   private int moves;
   private int[] map;
   private Rect affected_area;
-  private SokobanView view;
 
   public SokobanArena() {
     map_width = 15;

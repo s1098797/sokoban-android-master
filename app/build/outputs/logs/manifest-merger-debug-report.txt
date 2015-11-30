@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\David\AndroidStudioProjects\sokoban-android-master(git)\app\src\main\AndroidManifest.xml:2:1-20:12
+ADDED from C:\Users\David\AndroidStudioProjects\sokoban-android-master(git)\app\src\main\AndroidManifest.xml:2:1-22:12
 	package
 		ADDED from C:\Users\David\AndroidStudioProjects\sokoban-android-master(git)\app\src\main\AndroidManifest.xml:3:7-40
 		INJECTED from C:\Users\David\AndroidStudioProjects\sokoban-android-master(git)\app\src\main\AndroidManifest.xml
@@ -16,7 +16,7 @@ ADDED from C:\Users\David\AndroidStudioProjects\sokoban-android-master(git)\app\
 	android:configChanges
 		ADDED from C:\Users\David\AndroidStudioProjects\sokoban-android-master(git)\app\src\main\AndroidManifest.xml:6:7-68
 application
-ADDED from C:\Users\David\AndroidStudioProjects\sokoban-android-master(git)\app\src\main\AndroidManifest.xml:7:5-19:19
+ADDED from C:\Users\David\AndroidStudioProjects\sokoban-android-master(git)\app\src\main\AndroidManifest.xml:7:5-21:19
 	android:label
 		ADDED from C:\Users\David\AndroidStudioProjects\sokoban-android-master(git)\app\src\main\AndroidManifest.xml:7:18-50
 activity#com.itisdancing.Sokoban.SokobanApp
@@ -51,3 +51,9 @@ ADDED from C:\Users\David\AndroidStudioProjects\sokoban-android-master(git)\app\
 		ADDED from C:\Users\David\AndroidStudioProjects\sokoban-android-master(git)\app\src\main\AndroidManifest.xml:17:48-83
 	android:name
 		ADDED from C:\Users\David\AndroidStudioProjects\sokoban-android-master(git)\app\src\main\AndroidManifest.xml:17:19-47
+activity#com.itisdancing.Sokoban.PreferenceSetting
+ADDED from C:\Users\David\AndroidStudioProjects\sokoban-android-master(git)\app\src\main\AndroidManifest.xml:19:9-20:20
+	android:label
+		ADDED from C:\Users\David\AndroidStudioProjects\sokoban-android-master(git)\app\src\main\AndroidManifest.xml:19:52-76
+	android:name
+		ADDED from C:\Users\David\AndroidStudioProjects\sokoban-android-master(git)\app\src\main\AndroidManifest.xml:19:19-51

@@ -184,11 +184,19 @@ public class SokobanView extends View {
     Rect invalid;
 
     if (tall) {
-      switch(direction) {
-        case SokobanArena.SOUTH: direction = SokobanArena.EAST; break;
-        case SokobanArena.NORTH: direction = SokobanArena.WEST; break;
-        case SokobanArena.EAST: direction = SokobanArena.NORTH; break;
-        case SokobanArena.WEST: direction = SokobanArena.SOUTH; break;
+      switch (direction) {
+        case SokobanArena.SOUTH:
+          direction = SokobanArena.EAST;
+          break;
+        case SokobanArena.NORTH:
+          direction = SokobanArena.WEST;
+          break;
+        case SokobanArena.EAST:
+          direction = SokobanArena.NORTH;
+          break;
+        case SokobanArena.WEST:
+          direction = SokobanArena.SOUTH;
+          break;
       }
     }
 
@@ -204,28 +212,43 @@ public class SokobanView extends View {
     invalidate();
     updateStatusBar();
 
-    if(arena.gameWon()) {
+    if (arena.gameWon()) {
       levelWon();
-      if (current_level > ((SokobanGame) getContext()).getPassedLevel())  /* 21-nov */
+      /* -- codes to check user completed last level      30-nov -- */
+      d("map_list.getListLength() = " + map_list.getListLength());
+      if (current_level == map_list.getListLength()-1) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+        alert.setCancelable(false);
+        alert.setMessage("You completed all level!!");
+        alert.setTitle("Congraduation!");
+        alert.setNeutralButton("Home", new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int which) {
+            ((SokobanGame) getContext()).finish();
+          }
+        });
+        alert.show();
+      } else {    /* --  codes to check complete level ended   30-nov --  */
+        if (current_level > ((SokobanGame) getContext()).getPassedLevel())  /* 21-nov */
           ((SokobanGame) getContext()).putPassedLevel();   /* 21-nov */
-      AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-      alert.setCancelable(false);
-      alert.setMessage("Next: go to next level; Back: back to homepage");
-      alert.setTitle("Congraduation!");
-      alert.setPositiveButton("Next", new DialogInterface.OnClickListener() {
-        public void onClick(DialogInterface dialog, int which) {
-          nextLevel();
-        }
-      });
-      alert.setNegativeButton("Back", new DialogInterface.OnClickListener() {
-        public void onClick(DialogInterface dialog, int which) {
-          d("" + ((SokobanGame) getContext()).getSavedLevel() + 1);
-          selectMapLoad(current_level + 1); /* -- codes for loading next level for continue 19-nov -- */
-          ((SokobanGame) getContext()).finish();
-        }
-      });
-      alert.show();
-      //nextLevel();
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+        alert.setCancelable(false);
+        alert.setMessage("Next: go to next level; Back: back to homepage");
+        alert.setTitle("Congraduation!");
+        alert.setPositiveButton("Next", new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int which) {
+            nextLevel();
+          }
+        });
+        alert.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int which) {
+            d("" + ((SokobanGame) getContext()).getSavedLevel() + 1);
+            selectMapLoad(current_level + 1); /* -- codes for loading next level for continue 19-nov -- */
+            ((SokobanGame) getContext()).finish();
+          }
+        });
+        alert.show();
+        //nextLevel();
+      }
     }
   }
 
@@ -297,9 +320,6 @@ public class SokobanView extends View {
   }
 
   protected void updateStatusBar() {
-    if (((SokobanGame) getContext()).getSavedMoves()>0) {((SokobanGame) getContext()).setStatusBar(
-            "Level: " + (current_level + 1) +
-                    " | Moves: " + ((SokobanGame) getContext()).getSavedMoves());}
     ((SokobanGame) getContext()).setStatusBar(
             "Level: " + (current_level + 1) +
                     " | Moves: " + arena.getMoves()

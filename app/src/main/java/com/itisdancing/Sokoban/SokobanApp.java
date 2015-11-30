@@ -79,7 +79,9 @@ public class SokobanApp extends Activity implements OnClickListener
           startActivity(scores); break;
         case R.id.settings_button:
           //write PreferenceActivity codes
-            break;
+            Intent pref = new Intent(this, PreferenceSetting.class);
+            //scores.setClass(this, SokobanScores.class);
+            startActivity(pref); break;
         case R.id.about_button:
             new AlertDialog.Builder(this).setTitle(R.string.about).setMessage("Member:xxx").setNeutralButton("OK", null).show();
       }

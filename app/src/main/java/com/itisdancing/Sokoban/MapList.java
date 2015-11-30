@@ -82,6 +82,8 @@ public class MapList
     }
   }
 
+  public int getListLength() { return map_list.size(); }   /*  30-nov  */
+
   private class MapRecord {
     private int width;
     private int height;

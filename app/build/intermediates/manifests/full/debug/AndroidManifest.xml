@@ -25,6 +25,10 @@
             android:name="com.itisdancing.Sokoban.SokobanScores"
             android:label="Sokoban High Scores" >
         </activity>
+        <activity
+            android:name="com.itisdancing.Sokoban.PreferenceSetting"
+            android:label="Settings" >
+        </activity>
     </application>
 
 </manifest>
