@@ -11,9 +11,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.util.Log;
+import android.media.MediaPlayer;
 
 public class SokobanGame extends Activity
 {
+    MediaPlayer bkgrdmsc;
     SokobanView sokoban_view;
     TextView status_bar;
 
@@ -25,22 +27,29 @@ public class SokobanGame extends Activity
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-        ViewGroup frame;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game);
+        ViewGroup frame;
+        bkgrdmsc = MediaPlayer.create(this, R.raw.beeps );
+        bkgrdmsc.setLooping(true);
+        bkgrdmsc.start();
         frame = (ViewGroup) findViewById(R.id.game_frame);
         status_bar = (TextView) findViewById(R.id.game_status_bar);
         sokoban_view = new SokobanView(this, getIntent().getIntExtra(KEY_LEVEL, 0));
         sokoban_view.setFocusable(true);
         sokoban_view.setFocusableInTouchMode(true);
         frame.addView(sokoban_view);
+
+
     }
     
     @Override
     protected void onPause() {
       super.onPause();
       saveGame();
+        bkgrdmsc.release();
+        finish();
     }
 
 /*    @Override
