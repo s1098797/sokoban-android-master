@@ -38,7 +38,7 @@ public class MapList
         x += 1;
       }
     }
-    
+    arena.saveMap();//bill 02-dec
     return arena;
   }
 

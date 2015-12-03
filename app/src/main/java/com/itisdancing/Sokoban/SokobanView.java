@@ -2,7 +2,7 @@ package com.itisdancing.Sokoban;
 
 /* ----  this java produces the view: draw maps, set codes for user to control(play) and make reactions,   ---- */
 /* ---- there are problems that showing the arena in the app , I don't know whether this java or SokobanArena.java contain wrong codes ---- */
-/* ----  the app cannot perform level select, I don't know whether the codes in loadGame() are the main problem  ---- */
+/* ----  the app cannot perform level select, I don't know whether the codes in loadGame() are the main problem  SOLVED---- */
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -77,8 +77,12 @@ public class SokobanView extends View {
     nextLevel();
   }
   public void instantWin() { // for debugging
-    levelWon();
-    nextLevel();
+    //levelWon();
+    //nextLevel();
+    if(arena.redoMan()){  //bill 02-dec
+      invalidate();  //bill 02-dec
+      updateStatusBar();  //bill 02-dec
+    }
   }
 
   @Override

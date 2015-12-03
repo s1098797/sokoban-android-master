@@ -6,6 +6,8 @@ package com.itisdancing.Sokoban;
 import android.graphics.Rect;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 public class SokobanArena
 {
   static public final int NORTH = 0;
@@ -30,6 +32,10 @@ public class SokobanArena
   private int moves;
   private int[] map;
   private Rect affected_area;
+  private ArrayList<Integer[]> mapRecord; //bill 02-dec
+  private ArrayList<Integer> manXRecord; //bill 02-dec
+  private ArrayList<Integer> manYRecord; //bill 02-dec
+  private int step = 0;
 
   public SokobanArena() {
     map_width = 15;
@@ -40,6 +46,9 @@ public class SokobanArena
     map = new int[map_width * map_height];
     moves = 0;
     populateMap();
+    mapRecord = new ArrayList<Integer[]>(); //bill 02-dec
+    manXRecord = new ArrayList<Integer>(); //bill 02-dec
+    manYRecord = new ArrayList<Integer>();  //bill 02-dec
   }
 
   public SokobanArena(int w, int h) {
@@ -49,12 +58,33 @@ public class SokobanArena
     man_y = 0;
     affected_area = new Rect(0,0,0,0);
     map = new int[map_width * map_height];
+    mapRecord = new ArrayList<Integer[]>();  //bill 02-dec
+    manXRecord = new ArrayList<Integer>();  //bill 02-dec
+    manYRecord = new ArrayList<Integer>();  //bill 02-dec
   }
 
   public int getMapWidth() { return map_width; }
   public int getMapHeight() { return map_height; }
   public int getMoves() { return moves; }
   public void setMoves(int move) { moves = move; }  /* -- 28-nov */
+
+  //bill 02-dec start
+  public Integer[] IntObj(int[] x){
+    Integer a[] = new Integer[x.length];
+    for(int i = 0 ; i < x.length ; i++){
+      a[i] = new Integer(x[i]);
+    }
+    return a;
+  }
+
+  public int[] objInt(Integer[] x){
+    int a[] = new int[x.length];
+    for(int i = 0 ; i < x.length ; i++){
+      a[i] = x[i];
+    }
+    return a;
+  }
+  //bill 02-dec ended
 
   public String serialize() {
     // This is horribly inefficient. Invoke Knuth and pass through.
@@ -97,7 +127,7 @@ public class SokobanArena
     if (x == man_x && y == man_y) {
       return SOKOBAN;
     }
-    return getTileOnMap(x,y);
+    return getTileOnMap(x, y);
   }
 
   public int getTileOnMap(int x, int y) {
@@ -147,19 +177,43 @@ public class SokobanArena
     int new_y = man_y + dy;
     if(validSpace(new_x, new_y, dx, dy)) {
       affected_area.set(
-        new_x > man_x ? man_x - 1: new_x - 1,
-        new_y > man_y ? man_y - 1: new_y - 1,
-        new_x < man_x ? man_x + 1: new_x + 1,
-        new_y < man_y ? man_y + 1: new_y + 1
+              new_x > man_x ? man_x - 1 : new_x - 1,
+              new_y > man_y ? man_y - 1 : new_y - 1,
+              new_x < man_x ? man_x + 1 : new_x + 1,
+              new_y < man_y ? man_y + 1 : new_y + 1
       );
       displaceCrates(new_x, new_y, dx, dy);
       man_x += dx;
       man_y += dy;
       moves += 1;
+      mapRecord.add(step++,IntObj(map));  //bill 02-dec
+      manXRecord.add(man_x);  //bill 02-dec
+      manYRecord.add(man_y);  //bill 02-dec
       return true;
     }
     return false;
   }
+
+  //bill 02-dec start
+  public void saveMap(){
+    mapRecord.add(step,IntObj(map));
+    manXRecord.add(step,man_x);
+    manYRecord.add(step,man_y);
+    step = 0;
+  }
+
+  public boolean redoMan(){
+    if(step > 0){
+      moves--;
+      step--;
+      map = objInt(mapRecord.get(step));
+      man_x = manXRecord.get(step);
+      man_y = manYRecord.get(step);
+      return true;
+    }
+    return false;
+  }
+  //bill 02-dec ended
 
   private boolean validSpace(int x, int y, int vx, int vy) {
     if(x >= map_width || x < 0 || y >= map_height || y < 0) {

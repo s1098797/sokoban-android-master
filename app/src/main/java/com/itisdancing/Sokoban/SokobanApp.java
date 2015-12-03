@@ -83,7 +83,9 @@ public class SokobanApp extends Activity implements OnClickListener
             //scores.setClass(this, SokobanScores.class);
             startActivity(pref); break;
         case R.id.about_button:
-            new AlertDialog.Builder(this).setTitle(R.string.about).setMessage("Member:xxx").setNeutralButton("OK", null).show();
+            new AlertDialog.Builder(this).setTitle(R.string.about)
+                    .setMessage("Member: \n Lam Hon Ling (11083586), \n Lee Shing Hin (11115970), \n Tsang Chi Wai (10987971), \n Wong Hon To (11063077)")
+                    .setNeutralButton("OK", null).show();
       }
     }
 }
