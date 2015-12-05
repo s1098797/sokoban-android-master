@@ -5,19 +5,25 @@ package com.itisdancing.Sokoban;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.content.Intent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.util.Log;
 
-public class SokobanGame extends Activity
+public class SokobanGame extends Activity implements View.OnClickListener
 {
     SokobanView sokoban_view;
     TextView status_bar;
+    ImageButton sound_button;  /* -- sound  05 dec-- */
+    boolean soundOn;  /* -- sound  05 dec-- */
+    MediaPlayer mp;  /* -- sound  05 dec-- */
 
     private static final String PREF_SAVED_GAME = "saved_game";
     private static final String PREF_CURRENT_LEVEL = "current_level";
@@ -36,12 +42,22 @@ public class SokobanGame extends Activity
         setContentView(R.layout.game);
         frame = (ViewGroup) findViewById(R.id.game_frame);
         status_bar = (TextView) findViewById(R.id.game_status_bar);
+        sound_button = (ImageButton) findViewById(R.id.sound_button);   /* -- sound  05 dec-- */
+        sound_button.setOnClickListener(this);    /* -- sound  05 dec-- */
+        soundOn = true;  /* -- sound  05 dec-- */
+        mp = MediaPlayer.create(this, R.raw.sample14);   /* -- sound  05 dec-- */
         sokoban_view = new SokobanView(this, getIntent().getIntExtra(KEY_LEVEL, 0));
         sokoban_view.setFocusable(true);
         sokoban_view.setFocusableInTouchMode(true);
         frame.addView(sokoban_view);
     }
-    
+
+
+    public void setSoundOn(boolean on) {this.soundOn = on;}   /* -- sound  05 dec-- */
+
+    public boolean getSoundOn() {return soundOn;}   /* -- sound  05 dec-- */
+
+
     @Override
     protected void onPause() {
       super.onPause();
@@ -58,6 +74,18 @@ public class SokobanGame extends Activity
     protected void onDestroy() {
       super.onDestroy();
       saveGame();
+    }
+
+    /* -- method of sound_button  sound 05-dec -- */
+    public void onClick(View v) {
+        if (v.getId() == R.id.sound_button) {
+            setSoundOn(!getSoundOn());
+            d("sound: " + getSoundOn());
+            if (getSoundOn())
+                sound_button.setImageResource(R.drawable.speaker_louder_32);
+            else
+                sound_button.setImageResource(R.drawable.speaker_off_32);
+        }
     }
 
     @Override
@@ -131,4 +159,9 @@ public class SokobanGame extends Activity
       Log.d("SOKO", message);
     }
 
+    public void playSound() {   /* -- sound  05 dec-- */
+        if (soundOn) {
+            mp.start();
+        }
+    }
 }

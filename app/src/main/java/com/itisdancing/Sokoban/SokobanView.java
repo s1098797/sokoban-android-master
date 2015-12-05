@@ -204,7 +204,10 @@ public class SokobanView extends View {
       }
     }
 
-    arena.moveMan(direction);
+    //arena.moveMan(direction);
+    if (arena.moveMan(direction)==false) {
+      ((SokobanGame) getContext()).playSound();  /* -- sound  05 dec-- */
+    }
     /*invalid = arena.lastAffectedArea();
     invalid.set(
       (invalid.left   + arena_x_lower_bound) * TILE_SIZE,

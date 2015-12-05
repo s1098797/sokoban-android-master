@@ -22,23 +22,26 @@ public final class R {
         public static final int floor=0x7f020001;
         public static final int goal=0x7f020002;
         public static final int sokoban=0x7f020003;
-        public static final int wall=0x7f020004;
+        public static final int speaker_louder_32=0x7f020004;
+        public static final int speaker_off_32=0x7f020005;
+        public static final int wall=0x7f020006;
     }
     public static final class id {
-        public static final int about_button=0x7f0a0007;
-        public static final int game_frame=0x7f0a0001;
+        public static final int about_button=0x7f0a0008;
+        public static final int game_frame=0x7f0a0002;
         public static final int game_status_bar=0x7f0a0000;
-        public static final int high_score_moves=0x7f0a000a;
-        public static final int home_continue_button=0x7f0a0003;
-        public static final int home_high_score_button=0x7f0a0005;
-        public static final int home_level_select_button=0x7f0a0004;
-        public static final int home_new_button=0x7f0a0002;
-        public static final int retry_level=0x7f0a000b;
-        public static final int score_level=0x7f0a0009;
-        public static final int score_levelset=0x7f0a0008;
-        public static final int settings_button=0x7f0a0006;
-        public static final int skip_level=0x7f0a000c;
-        public static final int win_level=0x7f0a000d;
+        public static final int high_score_moves=0x7f0a000b;
+        public static final int home_continue_button=0x7f0a0004;
+        public static final int home_high_score_button=0x7f0a0006;
+        public static final int home_level_select_button=0x7f0a0005;
+        public static final int home_new_button=0x7f0a0003;
+        public static final int retry_level=0x7f0a000c;
+        public static final int score_level=0x7f0a000a;
+        public static final int score_levelset=0x7f0a0009;
+        public static final int settings_button=0x7f0a0007;
+        public static final int skip_level=0x7f0a000d;
+        public static final int sound_button=0x7f0a0001;
+        public static final int win_level=0x7f0a000e;
     }
     public static final class layout {
         public static final int game=0x7f030000;
@@ -50,7 +53,8 @@ public final class R {
         public static final int menu=0x7f090000;
     }
     public static final class raw {
-        public static final int sokoban=0x7f050000;
+        public static final int sample14=0x7f050000;
+        public static final int sokoban=0x7f050001;
     }
     public static final class string {
         public static final int about=0x7f080000;
