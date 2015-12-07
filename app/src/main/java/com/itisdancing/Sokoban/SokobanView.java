@@ -1,9 +1,7 @@
 package com.itisdancing.Sokoban;
 
-/* ----  this java produces the view: draw maps, set codes for user to control(play) and make reactions,   ---- */
-/* ---- there are problems that showing the arena in the app , I don't know whether this java or SokobanArena.java contain wrong codes ---- */
-/* ----  the app cannot perform level select, I don't know whether the codes in loadGame() are the main problem  ---- */
-
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.view.View;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -36,12 +34,14 @@ public class SokobanView extends View {
   private MapList map_list;
   private SokobanArena arena;
   private PersistentStore store;
+  private int monitorAnimation=1;
+  private int direction;
 
   public SokobanView(SokobanGame context) {
     super(context);
     store = new PersistentStore(context);
     floor = getResources().getDrawable(R.drawable.floor);
-    sokoban = getResources().getDrawable(R.drawable.sokoban);
+    sokoban = getResources().getDrawable(R.drawable.down1);
     wall = getResources().getDrawable(R.drawable.wall);
     crate = getResources().getDrawable(R.drawable.crate);
     goal = getResources().getDrawable(R.drawable.goal);
@@ -62,16 +62,19 @@ public class SokobanView extends View {
 
   public SokobanArena getArena() { return arena; } 
   public int getCurrentLevel() { return current_level; }
+  public int getCurrentMoves() { return arena.getMoves();}
 
   public void retryLevel() {
     selectMap(current_level);
   }
-  public void skipLevel() {
-    nextLevel();
-  }
-  public void instantWin() { // for debugging
-    levelWon();
-    nextLevel();
+
+  public void undo() {
+    if(arena.redoMan()){
+      String selection[] = {"NORTH","SOUTH","WEST","EAST"};
+      sokobanAnimation(selection[arena.getNowDirection()]);
+      invalidate();
+      updateStatusBar();
+    }
   }
 
   @Override
@@ -130,28 +133,6 @@ public class SokobanView extends View {
     return true;
   }
 
-  @Override
-  public boolean onKeyDown(int keyCode, KeyEvent event) {
-    Rect invalid;
-    switch (keyCode) {
-    case KeyEvent.KEYCODE_DPAD_UP:
-      doMove(SokobanArena.NORTH);
-      break;
-    case KeyEvent.KEYCODE_DPAD_DOWN:
-      doMove(SokobanArena.SOUTH);
-      break;
-    case KeyEvent.KEYCODE_DPAD_RIGHT:
-      doMove(SokobanArena.EAST);
-      break;
-    case KeyEvent.KEYCODE_DPAD_LEFT:
-      doMove(SokobanArena.WEST);
-      break;
-    default:
-      return super.onKeyDown(keyCode, event);
-    }
-    return true;
-  }
-
   protected void touchMove() {
     int delta_x = drag_stop.x - drag_start.x;
     int delta_y = drag_stop.y - drag_start.y;
@@ -173,19 +154,55 @@ public class SokobanView extends View {
     }
   }
 
+  protected void sokobanAnimation(String movingDirection) {
+    //change leg
+    monitorAnimation++;
+    switch (movingDirection) {
+      case "SOUTH":
+        sokoban = (monitorAnimation % 2 == 0 ? getResources().getDrawable(R.drawable.down2) : getResources().getDrawable(R.drawable.down4));
+        break;
+      case "NORTH":
+        sokoban = (monitorAnimation % 2 == 0 ? getResources().getDrawable(R.drawable.up2) : getResources().getDrawable(R.drawable.up4));
+        break;
+      case "EAST":
+        sokoban = (monitorAnimation % 2 == 0 ? getResources().getDrawable(R.drawable.right2) : getResources().getDrawable(R.drawable.right4));
+        break;
+      case "WEST":
+        sokoban = (monitorAnimation % 2 == 0 ? getResources().getDrawable(R.drawable.left2) : getResources().getDrawable(R.drawable.left4));
+        break;
+    }
+    //reset counter
+    if (monitorAnimation == 5) monitorAnimation = 1;
+  }
+
   protected void doMove(int direction) {
     Rect invalid;
-
+    arena.setNowDirection(direction);
     if (tall) {
-      switch(direction) {
-        case SokobanArena.SOUTH: direction = SokobanArena.EAST; break;
-        case SokobanArena.NORTH: direction = SokobanArena.WEST; break;
-        case SokobanArena.EAST: direction = SokobanArena.NORTH; break;
-        case SokobanArena.WEST: direction = SokobanArena.SOUTH; break;
+      switch (direction) {
+        case SokobanArena.SOUTH:
+          sokobanAnimation("SOUTH");
+          direction = SokobanArena.EAST;
+          break;
+        case SokobanArena.NORTH:
+          sokobanAnimation("NORTH");
+          direction = SokobanArena.WEST;
+          break;
+        case SokobanArena.EAST:
+          sokobanAnimation("EAST");
+          direction = SokobanArena.NORTH;
+          break;
+        case SokobanArena.WEST:
+          sokobanAnimation("WEST");
+          direction = SokobanArena.SOUTH;
+          break;
       }
     }
 
-    arena.moveMan(direction);
+
+    if (arena.moveMan(direction)==false) {
+      ((SokobanGame) getContext()).playSound();
+    }
     /*invalid = arena.lastAffectedArea();
     invalid.set(
       (invalid.left   + arena_x_lower_bound) * TILE_SIZE,
@@ -197,9 +214,41 @@ public class SokobanView extends View {
     invalidate();
     updateStatusBar();
 
-    if(arena.gameWon()) {
+    if (arena.gameWon()) {
       levelWon();
-      nextLevel();
+      d("map_list.getListLength() = " + map_list.getListLength());
+      if (current_level == map_list.getListLength()-1) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+        alert.setCancelable(false);
+        alert.setMessage("You completed all level!!");
+        alert.setTitle("Congraduation!");
+        alert.setNeutralButton("Home", new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int which) {
+            ((SokobanGame) getContext()).finish();
+          }
+        });
+        alert.show();
+      } else {
+        if (current_level > ((SokobanGame) getContext()).getPassedLevel())
+          ((SokobanGame) getContext()).putPassedLevel();
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+        alert.setCancelable(false);
+        alert.setMessage("Next: go to next level; Back: back to homepage");
+        alert.setTitle("Congraduation!");
+        alert.setPositiveButton("Next", new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int which) {
+            nextLevel();
+          }
+        });
+        alert.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int which) {
+            d("" + ((SokobanGame) getContext()).getSavedLevel() + 1);
+            selectMapLoad(current_level + 1);
+            ((SokobanGame) getContext()).finish();
+          }
+        });
+        alert.show();
+      }
     }
   }
 
@@ -230,7 +279,9 @@ public class SokobanView extends View {
       } else {
         current_level = ((SokobanGame) getContext()).getSavedLevel();
         d("Saved game found for level #" + current_level);
+        d(""+ saved_game);
         arena = new MapList(new StringReader(saved_game)).selectMap(0);
+        arena.setMoves(((SokobanGame) getContext()).getSavedMoves());
       }
     } else {
       d("Loading level #" + current_level);
@@ -243,6 +294,17 @@ public class SokobanView extends View {
     current_level = level;
     updateStatusBar();
     invalidate();
+  }
+
+  /* -- selectMapLoad() is new created for loading next level info. for user to continue -- */
+  protected void selectMapLoad(int level) {
+    d(""+level);
+    arena = map_list.selectMap(level);
+    current_level = level;
+    d(""+current_level);
+    updateStatusBar();
+    invalidate();
+    ((SokobanGame) getContext()).saveGame();
   }
 
   protected void levelWon() {
@@ -259,9 +321,10 @@ public class SokobanView extends View {
 
   protected void updateStatusBar() {
     ((SokobanGame) getContext()).setStatusBar(
-      "Level: " + (current_level + 1) +
-      " | Moves: " + arena.getMoves()
+            "Level: " + (current_level + 1) +
+                    " | Moves: " + arena.getMoves()
     );
   }
+
 }
 

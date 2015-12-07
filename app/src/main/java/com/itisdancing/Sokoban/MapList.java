@@ -1,7 +1,5 @@
 package com.itisdancing.Sokoban;
 
-/* ---- this class generates the map from the raw data file "sokoban"  ---- */
-
 import java.io.*;
 import java.util.*;
 import android.util.Log;
@@ -38,7 +36,7 @@ public class MapList
         x += 1;
       }
     }
-    
+    arena.saveMap();
     return arena;
   }
 
@@ -81,6 +79,8 @@ public class MapList
       // TODO
     }
   }
+
+  public int getListLength() { return map_list.size(); }
 
   private class MapRecord {
     private int width;

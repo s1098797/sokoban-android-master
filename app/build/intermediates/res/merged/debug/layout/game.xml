@@ -4,16 +4,32 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-<TextView
-    android:id="@+id/game_status_bar"
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="SOKOBAN"
-    />
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/game_status_bar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="SOKOBAN"
+            android:textSize="20dp"
+            />
+
+        <Button
+            android:id="@+id/undo_button"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="Undo"
+            android:onClick="buttonClicked"
+            />
+    </RelativeLayout>
 <FrameLayout
     android:id="@+id/game_frame"
     android:layout_width="fill_parent" 
     android:layout_height="fill_parent" 
     />
 </LinearLayout>
-<!-- From: file:/C:/Users/David/AndroidStudioProjects/sokoban-android-master(git)/app/src/main/res/layout/game.xml -->
+<!-- From: file:/C:/Users/David/AndroidStudioProjects/sokoban-android-master/app/src/main/res/layout/game.xml -->

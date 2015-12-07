@@ -1,10 +1,9 @@
 package com.itisdancing.Sokoban;
 
-/* ---- this class consists of the arena: generate map, mostly controls the data changed from the SokobanView class, performs validation  ---- */
-/* ---- there are problems that showing the arena in the app , I don't know whether this java or SokobanView.java contain wrong codes ---- */
-
 import android.graphics.Rect;
 import android.util.Log;
+
+import java.util.ArrayList;
 
 public class SokobanArena
 {
@@ -30,6 +29,12 @@ public class SokobanArena
   private int moves;
   private int[] map;
   private Rect affected_area;
+  private ArrayList<Integer[]> mapRecord;
+  private ArrayList<Integer> manXRecord;
+  private ArrayList<Integer> manYRecord;
+  private ArrayList<Integer> manDirectionRecord;
+  private int initMove;
+  private int nowDirection = 0;
 
   public SokobanArena() {
     map_width = 15;
@@ -38,8 +43,12 @@ public class SokobanArena
     man_y = 5;
     affected_area = new Rect(0,0,0,0);
     map = new int[map_width * map_height];
-    moves = 0;
+    moves = initMove = 0;
     populateMap();
+    mapRecord = new ArrayList<Integer[]>();
+    manXRecord = new ArrayList<Integer>();
+    manYRecord = new ArrayList<Integer>();
+    manDirectionRecord = new ArrayList<Integer>();
   }
 
   public SokobanArena(int w, int h) {
@@ -49,14 +58,50 @@ public class SokobanArena
     man_y = 0;
     affected_area = new Rect(0,0,0,0);
     map = new int[map_width * map_height];
+    mapRecord = new ArrayList<Integer[]>();
+    manXRecord = new ArrayList<Integer>();
+    manYRecord = new ArrayList<Integer>();
+    manDirectionRecord = new ArrayList<Integer>();
   }
 
+  public int getNowDirection() { return nowDirection; }
   public int getMapWidth() { return map_width; }
   public int getMapHeight() { return map_height; }
   public int getMoves() { return moves; }
+  public void setNowDirection(int nowDirection){
+    this.nowDirection = nowDirection;
+  }
+  public void setMoves(int move) {
+    moves = initMove = move;
+    for (int i=0; i<initMove; i++) {
+      mapRecord.add(new Integer[i]);
+      manXRecord.add(new Integer(0));
+      manYRecord.add(new Integer(0));
+      manDirectionRecord.add(new Integer(0));
+    }
+    mapRecord.add(moves,IntObj(map));
+    manXRecord.add(moves,man_x);
+    manYRecord.add(moves,man_y);
+    manDirectionRecord.add(moves,nowDirection);
+  }
+
+  public Integer[] IntObj(int[] x){
+    Integer a[] = new Integer[x.length];
+    for(int i = 0 ; i < x.length ; i++){
+      a[i] = new Integer(x[i]);
+    }
+    return a;
+  }
+
+  public int[] objInt(Integer[] x){
+    int a[] = new int[x.length];
+    for(int i = 0 ; i < x.length ; i++){
+      a[i] = x[i];
+    }
+    return a;
+  }
 
   public String serialize() {
-    // This is horribly inefficient. Invoke Knuth and pass through.
     StringBuilder str = new StringBuilder();
     for(int iy = 0; iy < map_height; iy++) {
       for(int ix = 0; ix < map_width; ix++) {
@@ -88,7 +133,7 @@ public class SokobanArena
       case WEST: return tryMovingMan(-1,0);
       case SOUTH: return tryMovingMan(0,1);
     }
-    return false; // qlb
+    return false;
   }
 
   public int getTile(int x, int y) {
@@ -96,7 +141,7 @@ public class SokobanArena
     if (x == man_x && y == man_y) {
       return SOKOBAN;
     }
-    return getTileOnMap(x,y);
+    return getTileOnMap(x, y);
   }
 
   public int getTileOnMap(int x, int y) {
@@ -146,15 +191,38 @@ public class SokobanArena
     int new_y = man_y + dy;
     if(validSpace(new_x, new_y, dx, dy)) {
       affected_area.set(
-        new_x > man_x ? man_x - 1: new_x - 1,
-        new_y > man_y ? man_y - 1: new_y - 1,
-        new_x < man_x ? man_x + 1: new_x + 1,
-        new_y < man_y ? man_y + 1: new_y + 1
+              new_x > man_x ? man_x - 1 : new_x - 1,
+              new_y > man_y ? man_y - 1 : new_y - 1,
+              new_x < man_x ? man_x + 1 : new_x + 1,
+              new_y < man_y ? man_y + 1 : new_y + 1
       );
       displaceCrates(new_x, new_y, dx, dy);
       man_x += dx;
       man_y += dy;
       moves += 1;
+      mapRecord.add(moves,IntObj(map));
+      manXRecord.add(moves, man_x);
+      manYRecord.add(moves, man_y);
+      manDirectionRecord.add(moves, nowDirection);
+      return true;
+    }
+    return false;
+  }
+
+  public void saveMap(){
+    mapRecord.add(moves,IntObj(map));
+    manXRecord.add(moves,man_x);
+    manYRecord.add(moves,man_y);
+    manDirectionRecord.add(moves,nowDirection);
+  }
+
+  public boolean redoMan(){
+    if(moves > initMove){
+      moves--;
+      map = objInt(mapRecord.get(moves));
+      man_x = manXRecord.get(moves);
+      man_y = manYRecord.get(moves);
+      nowDirection = manDirectionRecord.get(moves);
       return true;
     }
     return false;
@@ -184,7 +252,6 @@ public class SokobanArena
   }
 
   private void populateMap() {
-    // It's a FAAAAAAKE!
     setTile(0,2,WALL);
     setTile(5,7,CRATE);
     setTile(4,7,WALL);
