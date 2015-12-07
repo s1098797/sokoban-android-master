@@ -38,12 +38,13 @@ public class SokobanView extends View {
   private MapList map_list;
   private SokobanArena arena;
   private PersistentStore store;
+  private int monitorAnimation=1;
 
   public SokobanView(SokobanGame context) {
     super(context);
     store = new PersistentStore(context);
     floor = getResources().getDrawable(R.drawable.floor);
-    sokoban = getResources().getDrawable(R.drawable.sokoban);
+    sokoban = getResources().getDrawable(R.drawable.down1);
     wall = getResources().getDrawable(R.drawable.wall);
     crate = getResources().getDrawable(R.drawable.crate);
     goal = getResources().getDrawable(R.drawable.goal);
@@ -141,28 +142,6 @@ public class SokobanView extends View {
     return true;
   }
 
-  @Override
-  public boolean onKeyDown(int keyCode, KeyEvent event) {
-    Rect invalid;
-    switch (keyCode) {
-    case KeyEvent.KEYCODE_DPAD_UP:
-      doMove(SokobanArena.NORTH);
-      break;
-    case KeyEvent.KEYCODE_DPAD_DOWN:
-      doMove(SokobanArena.SOUTH);
-      break;
-    case KeyEvent.KEYCODE_DPAD_RIGHT:
-      doMove(SokobanArena.EAST);
-      break;
-    case KeyEvent.KEYCODE_DPAD_LEFT:
-      doMove(SokobanArena.WEST);
-      break;
-    default:
-      return super.onKeyDown(keyCode, event);
-    }
-    return true;
-  }
-
   protected void touchMove() {
     int delta_x = drag_stop.x - drag_start.x;
     int delta_y = drag_stop.y - drag_start.y;
@@ -184,21 +163,46 @@ public class SokobanView extends View {
     }
   }
 
+  protected void sokobanAnimation(String movingDirection) {
+    //change leg
+    monitorAnimation++;
+    switch (movingDirection) {
+      case "SOUTH":
+        sokoban = (monitorAnimation % 2 == 0 ? getResources().getDrawable(R.drawable.down2) : getResources().getDrawable(R.drawable.down4));
+        break;
+      case "NORTH":
+        sokoban = (monitorAnimation % 2 == 0 ? getResources().getDrawable(R.drawable.up2) : getResources().getDrawable(R.drawable.up4));
+        break;
+      case "EAST":
+        sokoban = (monitorAnimation % 2 == 0 ? getResources().getDrawable(R.drawable.right2) : getResources().getDrawable(R.drawable.right4));
+        break;
+      case "WEST":
+        sokoban = (monitorAnimation % 2 == 0 ? getResources().getDrawable(R.drawable.left2) : getResources().getDrawable(R.drawable.left4));
+        break;
+    }
+    //reset counter
+    if (monitorAnimation == 5) monitorAnimation = 1;
+  }
+
   protected void doMove(int direction) {
     Rect invalid;
 
     if (tall) {
       switch (direction) {
         case SokobanArena.SOUTH:
+          sokobanAnimation("SOUTH");
           direction = SokobanArena.EAST;
           break;
         case SokobanArena.NORTH:
+          sokobanAnimation("NORTH");
           direction = SokobanArena.WEST;
           break;
         case SokobanArena.EAST:
+          sokobanAnimation("EAST");
           direction = SokobanArena.NORTH;
           break;
         case SokobanArena.WEST:
+          sokobanAnimation("WEST");
           direction = SokobanArena.SOUTH;
           break;
       }
