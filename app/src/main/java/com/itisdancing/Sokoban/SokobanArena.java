@@ -35,6 +35,7 @@ public class SokobanArena
   private ArrayList<Integer[]> mapRecord; //bill 02-dec
   private ArrayList<Integer> manXRecord; //bill 02-dec
   private ArrayList<Integer> manYRecord; //bill 02-dec
+  private int initMove;
   private int step = 0;
 
   public SokobanArena() {
@@ -44,7 +45,7 @@ public class SokobanArena
     man_y = 5;
     affected_area = new Rect(0,0,0,0);
     map = new int[map_width * map_height];
-    moves = 0;
+    moves = initMove = 0;
     populateMap();
     mapRecord = new ArrayList<Integer[]>(); //bill 02-dec
     manXRecord = new ArrayList<Integer>(); //bill 02-dec
@@ -66,7 +67,17 @@ public class SokobanArena
   public int getMapWidth() { return map_width; }
   public int getMapHeight() { return map_height; }
   public int getMoves() { return moves; }
-  public void setMoves(int move) { moves = move; }  /* -- 28-nov */
+  public void setMoves(int move) {
+    moves = initMove = move;
+    for (int i=0; i<initMove; i++) {
+      mapRecord.add(new Integer[i]);
+      manXRecord.add(new Integer(0));
+      manYRecord.add(new Integer(0));
+    }
+    mapRecord.add(moves,IntObj(map));
+    manXRecord.add(moves,man_x);
+    manYRecord.add(moves,man_y);
+  }  /* -- 28-nov */
 
   //bill 02-dec start
   public Integer[] IntObj(int[] x){
@@ -186,9 +197,9 @@ public class SokobanArena
       man_x += dx;
       man_y += dy;
       moves += 1;
-      mapRecord.add(step++,IntObj(map));  //bill 02-dec
-      manXRecord.add(man_x);  //bill 02-dec
-      manYRecord.add(man_y);  //bill 02-dec
+      mapRecord.add(moves,IntObj(map));  //bill 02-dec
+      manXRecord.add(moves, man_x);  //bill 02-dec
+      manYRecord.add(moves, man_y);  //bill 02-dec
       return true;
     }
     return false;
@@ -196,19 +207,18 @@ public class SokobanArena
 
   //bill 02-dec start
   public void saveMap(){
-    mapRecord.add(step,IntObj(map));
-    manXRecord.add(step,man_x);
-    manYRecord.add(step,man_y);
-    step = 0;
+    mapRecord.add(moves,IntObj(map));
+    manXRecord.add(moves,man_x);
+    manYRecord.add(moves,man_y);
+    //step = 0;
   }
 
   public boolean redoMan(){
-    if(step > 0){
+    if(moves > initMove){
       moves--;
-      step--;
-      map = objInt(mapRecord.get(step));
-      man_x = manXRecord.get(step);
-      man_y = manYRecord.get(step);
+      map = objInt(mapRecord.get(moves));
+      man_x = manXRecord.get(moves);
+      man_y = manYRecord.get(moves);
       return true;
     }
     return false;

@@ -8,40 +8,42 @@
 package com.itisdancing.Sokoban;
 
 public final class R {
-    public static final class array {
-        public static final int button_names=0x7f060000;
-        public static final int languages=0x7f060001;
-    }
     public static final class attr {
-    }
-    public static final class bool {
-        public static final int editor_background_music_default=0x7f070000;
     }
     public static final class drawable {
         public static final int crate=0x7f020000;
-        public static final int floor=0x7f020001;
-        public static final int goal=0x7f020002;
-        public static final int sokoban=0x7f020003;
-        public static final int speaker_louder_32=0x7f020004;
-        public static final int speaker_off_32=0x7f020005;
-        public static final int wall=0x7f020006;
+        public static final int down1=0x7f020001;
+        public static final int down2=0x7f020002;
+        public static final int down4=0x7f020003;
+        public static final int floor=0x7f020004;
+        public static final int goal=0x7f020005;
+        public static final int left2=0x7f020006;
+        public static final int left4=0x7f020007;
+        public static final int right2=0x7f020008;
+        public static final int right4=0x7f020009;
+        public static final int sokoban=0x7f02000a;
+        public static final int speaker_louder_32=0x7f02000b;
+        public static final int speaker_off_32=0x7f02000c;
+        public static final int up2=0x7f02000d;
+        public static final int up4=0x7f02000e;
+        public static final int wall=0x7f02000f;
     }
     public static final class id {
-        public static final int about_button=0x7f0a0008;
-        public static final int game_frame=0x7f0a0002;
-        public static final int game_status_bar=0x7f0a0000;
-        public static final int high_score_moves=0x7f0a000b;
-        public static final int home_continue_button=0x7f0a0004;
-        public static final int home_high_score_button=0x7f0a0006;
-        public static final int home_level_select_button=0x7f0a0005;
-        public static final int home_new_button=0x7f0a0003;
-        public static final int retry_level=0x7f0a000c;
-        public static final int score_level=0x7f0a000a;
-        public static final int score_levelset=0x7f0a0009;
-        public static final int settings_button=0x7f0a0007;
-        public static final int skip_level=0x7f0a000d;
-        public static final int sound_button=0x7f0a0001;
-        public static final int win_level=0x7f0a000e;
+        public static final int about_button=0x7f080008;
+        public static final int game_frame=0x7f080002;
+        public static final int game_status_bar=0x7f080000;
+        public static final int high_score_moves=0x7f08000b;
+        public static final int home_continue_button=0x7f080004;
+        public static final int home_high_score_button=0x7f080006;
+        public static final int home_level_select_button=0x7f080005;
+        public static final int home_new_button=0x7f080003;
+        public static final int retry_level=0x7f08000c;
+        public static final int score_level=0x7f08000a;
+        public static final int score_levelset=0x7f080009;
+        public static final int settings_button=0x7f080007;
+        public static final int skip_level=0x7f08000d;
+        public static final int sound_button=0x7f080001;
+        public static final int win_level=0x7f08000e;
     }
     public static final class layout {
         public static final int game=0x7f030000;
@@ -50,26 +52,23 @@ public final class R {
         public static final int score_item=0x7f030003;
     }
     public static final class menu {
-        public static final int menu=0x7f090000;
+        public static final int menu=0x7f070000;
     }
     public static final class raw {
         public static final int sample14=0x7f050000;
         public static final int sokoban=0x7f050001;
     }
     public static final class string {
-        public static final int about=0x7f080000;
-        public static final int app_name=0x7f080001;
-        public static final int continue_game=0x7f080002;
-        public static final int editor_background_music_key=0x7f080003;
-        public static final int editor_languages_default=0x7f080004;
-        public static final int editor_languages_key=0x7f080005;
-        public static final int high_scores=0x7f080006;
-        public static final int level_select=0x7f080007;
-        public static final int new_game=0x7f080008;
-        public static final int retry_level=0x7f080009;
-        public static final int settings=0x7f08000a;
-        public static final int skip_level=0x7f08000b;
-        public static final int win_level=0x7f08000c;
+        public static final int about=0x7f060000;
+        public static final int app_name=0x7f060001;
+        public static final int continue_game=0x7f060002;
+        public static final int high_scores=0x7f060003;
+        public static final int level_select=0x7f060004;
+        public static final int new_game=0x7f060005;
+        public static final int retry_level=0x7f060006;
+        public static final int settings=0x7f060007;
+        public static final int skip_level=0x7f060008;
+        public static final int win_level=0x7f060009;
     }
     public static final class xml {
         public static final int editor_prefs=0x7f040000;

@@ -1,29 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/C:/Users/David/AndroidStudioProjects/sokoban-android-master(git)/app/src/main/res/values/values.xml -->
-    <eat-comment/>
-    <string-array name="button_names">
-        <item>Clear</item>
-        <item>Load</item>
-        <item>Save</item>
-    </string-array>
-    <string-array name="languages">
-        <item>English</item>
-        <item>Chinese</item>
-    </string-array>
-    <bool name="editor_background_music_default">true</bool>
     <!-- From: file:/C:/Users/David/AndroidStudioProjects/sokoban-android-master(git)/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="about">About</string>
     <string name="app_name">Sokoban</string>
     <string name="continue_game">Continue</string>
-    <!-- From: file:/C:/Users/David/AndroidStudioProjects/sokoban-android-master(git)/app/src/main/res/values/values.xml -->
-    <eat-comment/>
-    <string name="editor_background_music_key">background_music</string>
-    <string name="editor_languages_default">English</string>
-    <string name="editor_languages_key">languages</string>
-    <!-- From: file:/C:/Users/David/AndroidStudioProjects/sokoban-android-master(git)/app/src/main/res/values/strings.xml -->
-    <eat-comment/>
     <string name="high_scores">High Scores</string>
     <string name="level_select">Level Select</string>
     <string name="new_game">New Game</string>
