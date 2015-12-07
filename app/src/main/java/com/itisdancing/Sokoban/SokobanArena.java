@@ -35,8 +35,9 @@ public class SokobanArena
   private ArrayList<Integer[]> mapRecord; //bill 02-dec
   private ArrayList<Integer> manXRecord; //bill 02-dec
   private ArrayList<Integer> manYRecord; //bill 02-dec
+  private ArrayList<Integer> manDirectionRecord; //bill 02-dec
   private int initMove;
-  private int step = 0;
+  private int nowDirection = 0;
 
   public SokobanArena() {
     map_width = 15;
@@ -50,6 +51,7 @@ public class SokobanArena
     mapRecord = new ArrayList<Integer[]>(); //bill 02-dec
     manXRecord = new ArrayList<Integer>(); //bill 02-dec
     manYRecord = new ArrayList<Integer>();  //bill 02-dec
+    manDirectionRecord = new ArrayList<Integer>();  //bill 02-dec
   }
 
   public SokobanArena(int w, int h) {
@@ -62,21 +64,28 @@ public class SokobanArena
     mapRecord = new ArrayList<Integer[]>();  //bill 02-dec
     manXRecord = new ArrayList<Integer>();  //bill 02-dec
     manYRecord = new ArrayList<Integer>();  //bill 02-dec
+    manDirectionRecord = new ArrayList<Integer>();  //bill 02-dec
   }
 
+  public int getNowDirection() { return nowDirection; }
   public int getMapWidth() { return map_width; }
   public int getMapHeight() { return map_height; }
   public int getMoves() { return moves; }
+  public void setNowDirection(int nowDirection){
+    this.nowDirection = nowDirection;
+  }
   public void setMoves(int move) {
     moves = initMove = move;
     for (int i=0; i<initMove; i++) {
       mapRecord.add(new Integer[i]);
       manXRecord.add(new Integer(0));
       manYRecord.add(new Integer(0));
+      manDirectionRecord.add(new Integer(0));
     }
     mapRecord.add(moves,IntObj(map));
     manXRecord.add(moves,man_x);
     manYRecord.add(moves,man_y);
+    manDirectionRecord.add(moves,nowDirection);
   }  /* -- 28-nov */
 
   //bill 02-dec start
@@ -200,6 +209,7 @@ public class SokobanArena
       mapRecord.add(moves,IntObj(map));  //bill 02-dec
       manXRecord.add(moves, man_x);  //bill 02-dec
       manYRecord.add(moves, man_y);  //bill 02-dec
+      manDirectionRecord.add(moves, nowDirection);  //bill 02-dec
       return true;
     }
     return false;
@@ -210,6 +220,7 @@ public class SokobanArena
     mapRecord.add(moves,IntObj(map));
     manXRecord.add(moves,man_x);
     manYRecord.add(moves,man_y);
+    manDirectionRecord.add(moves,nowDirection);
     //step = 0;
   }
 
@@ -219,6 +230,7 @@ public class SokobanArena
       map = objInt(mapRecord.get(moves));
       man_x = manXRecord.get(moves);
       man_y = manYRecord.get(moves);
+      nowDirection = manDirectionRecord.get(moves);
       return true;
     }
     return false;

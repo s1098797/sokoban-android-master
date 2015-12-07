@@ -41,9 +41,8 @@ public final class R {
         public static final int score_level=0x7f08000a;
         public static final int score_levelset=0x7f080009;
         public static final int settings_button=0x7f080007;
-        public static final int skip_level=0x7f08000d;
-        public static final int sound_button=0x7f080001;
-        public static final int win_level=0x7f08000e;
+        public static final int sound=0x7f08000d;
+        public static final int undo_button=0x7f080001;
     }
     public static final class layout {
         public static final int game=0x7f030000;

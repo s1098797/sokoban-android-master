@@ -39,6 +39,7 @@ public class SokobanView extends View {
   private SokobanArena arena;
   private PersistentStore store;
   private int monitorAnimation=1;
+  private int direction;
 
   public SokobanView(SokobanGame context) {
     super(context);
@@ -77,10 +78,12 @@ public class SokobanView extends View {
   public void skipLevel() {
     nextLevel();
   }
-  public void instantWin() { // for debugging
+  public void undo() { // for debugging
     //levelWon();
     //nextLevel();
     if(arena.redoMan()){  //bill 02-dec
+      String selection[] = {"NORTH","SOUTH","WEST","EAST"};
+      sokobanAnimation(selection[arena.getNowDirection()]);
       invalidate();  //bill 02-dec
       updateStatusBar();  //bill 02-dec
     }
@@ -186,7 +189,7 @@ public class SokobanView extends View {
 
   protected void doMove(int direction) {
     Rect invalid;
-
+    arena.setNowDirection(direction);
     if (tall) {
       switch (direction) {
         case SokobanArena.SOUTH:

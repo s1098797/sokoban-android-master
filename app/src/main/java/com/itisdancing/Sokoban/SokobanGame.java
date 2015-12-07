@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.util.Log;
@@ -21,7 +22,7 @@ public class SokobanGame extends Activity implements View.OnClickListener
 {
     SokobanView sokoban_view;
     TextView status_bar;
-    ImageButton sound_button;  /* -- sound  05 dec-- */
+    Button undo_button;  /* -- sound  05 dec-- */
     boolean soundOn;  /* -- sound  05 dec-- */
     MediaPlayer mp;  /* -- sound  05 dec-- */
 
@@ -42,8 +43,8 @@ public class SokobanGame extends Activity implements View.OnClickListener
         setContentView(R.layout.game);
         frame = (ViewGroup) findViewById(R.id.game_frame);
         status_bar = (TextView) findViewById(R.id.game_status_bar);
-        sound_button = (ImageButton) findViewById(R.id.sound_button);   /* -- sound  05 dec-- */
-        sound_button.setOnClickListener(this);    /* -- sound  05 dec-- */
+        undo_button = (Button) findViewById(R.id.undo_button);   /* -- sound  05 dec-- */
+        undo_button.setOnClickListener(this);    /* -- sound  05 dec-- */
         soundOn = true;  /* -- sound  05 dec-- */
         mp = MediaPlayer.create(this, R.raw.sample14);   /* -- sound  05 dec-- */
         sokoban_view = new SokobanView(this, getIntent().getIntExtra(KEY_LEVEL, 0));
@@ -78,21 +79,22 @@ public class SokobanGame extends Activity implements View.OnClickListener
 
     /* -- method of sound_button  sound 05-dec -- */
     public void onClick(View v) {
-        if (v.getId() == R.id.sound_button) {
-            setSoundOn(!getSoundOn());
+        if (v.getId() == R.id.undo_button) {
+        /*    setSoundOn(!getSoundOn());
             d("sound: " + getSoundOn());
             if (getSoundOn())
                 sound_button.setImageResource(R.drawable.speaker_louder_32);
             else
-                sound_button.setImageResource(R.drawable.speaker_off_32);
+                sound_button.setImageResource(R.drawable.speaker_off_32);*/
+            sokoban_view.undo();
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-      super.onCreateOptionsMenu(menu);
+        super.onCreateOptionsMenu(menu);
       MenuInflater inflater = getMenuInflater();
-      inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.menu, menu);
       return true;
     }
     
@@ -102,26 +104,31 @@ public class SokobanGame extends Activity implements View.OnClickListener
         case R.id.retry_level:
           sokoban_view.retryLevel();
           return true;
-        case R.id.skip_level:
+        /*case R.id.skip_level:
           sokoban_view.skipLevel();
-          return true;
-        case R.id.win_level:
-          sokoban_view.instantWin();
+          return true;*/
+        case R.id.sound:
+            setSoundOn(!getSoundOn());
+            d("sound: " + getSoundOn());
+            if (getSoundOn())
+                item.setTitle("Sound On");
+            else
+                item.setTitle("Sound Off");
           return true;
       }
       return false;
     }
 
     public String getSavedGame() {
-      return getPreferences(MODE_PRIVATE).getString(PREF_SAVED_GAME, null);
+      return getSharedPreferences(SHARE_PREF_NAME, Context.MODE_PRIVATE).getString(PREF_SAVED_GAME, null);
     }
 
     public int getSavedLevel() {
-      return getPreferences(MODE_PRIVATE).getInt(PREF_CURRENT_LEVEL, 0);
+      return getSharedPreferences(SHARE_PREF_NAME, Context.MODE_PRIVATE).getInt(PREF_CURRENT_LEVEL, 0);
     }
 
     public int getSavedMoves() { /* 28-nov */
-        return getPreferences(MODE_PRIVATE).getInt(PERF_CURRENT_MOVE, 0);
+        return getSharedPreferences(SHARE_PREF_NAME, Context.MODE_PRIVATE).getInt(PERF_CURRENT_MOVE, 0);
     }
 
     public void setStatusBar(String message) {
@@ -130,17 +137,17 @@ public class SokobanGame extends Activity implements View.OnClickListener
 
     protected void saveGame() {
       d("Saving game");
-      getPreferences(MODE_PRIVATE).edit().
+      /*getPreferences(MODE_PRIVATE).edit().
         putString(PREF_SAVED_GAME, sokoban_view.getArena().serialize()).
         putInt(PREF_CURRENT_LEVEL, sokoban_view.getCurrentLevel()).
         putInt(PERF_CURRENT_MOVE, sokoban_view.getCurrentMoves()).
-        commit();
-        /*SharedPreferences pref = getSharedPreferences(SHARE_PREF_NAME, Context.MODE_PRIVATE);
+        commit();*/
+        SharedPreferences pref = getSharedPreferences(SHARE_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(PREF_SAVED_GAME, sokoban_view.getArena().serialize());
         editor.putInt(PREF_CURRENT_LEVEL, sokoban_view.getCurrentLevel());
         editor.putInt(PERF_CURRENT_MOVE, sokoban_view.getCurrentMoves());
-        editor.commit();*/
+        editor.commit();
     }
 
     public void putPassedLevel() {     /* 21-nov */

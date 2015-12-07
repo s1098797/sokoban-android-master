@@ -2,9 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
   <item android:id="@+id/retry_level"
     android:title="@string/retry_level" />
-  <item android:id="@+id/skip_level"
-    android:title="@string/skip_level" />
-  <item android:id="@+id/win_level"
-    android:title="@string/win_level" />
+  <item android:id="@+id/sound"
+    android:title="Sound On" />
 </menu>
 <!-- From: file:/C:/Users/David/AndroidStudioProjects/sokoban-android-master(git)/app/src/main/res/menu/menu.xml -->
